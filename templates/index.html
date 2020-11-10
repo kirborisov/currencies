@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+</script>
+
+<h1>Выборка валют, тестовое задание</h1>
+
+{% for message in get_flashed_messages() %}
+    <p style="color:red;">
+        {{ message }}
+    </p>
+{% endfor %}
+
+<form method="POST">
+    <table>
+        <tr><td colspan="5">Введите диапазон дат в формате dd.mm.YY, например 22.03.2020</td></tr>
+        <tr><td>от <input name="date_from" value="{% if request_form['date_from'] is defined %} {{request_form['date_from']}} {% endif %} " />
+            до <input name="date_to" value="{% if request_form['date_to'] is defined %} {{request_form['date_to']}} {% endif %} "/></td></tr>
+        <tr><td><input type="submit" /></td></tr>
+
+
+    </table>
+</form>
+
+<h3>Значения валют</h3>
+<table id="myTable">
+    <thead>
+    <tr>
+        <th>code</th>
+        <th>symbol</th>
+        <th>rate</th>
+        <th>date</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for data_currency in data_currencies %}
+
+        <tr>
+            <td>{{data_currency.code}}</td>
+            <td>{{data_currency.symbol}}</td>
+            <td>{{data_currency.rate}}</td>
+            <td>{{data_currency.date_value}}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
